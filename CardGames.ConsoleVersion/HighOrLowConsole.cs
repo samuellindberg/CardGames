@@ -110,8 +110,9 @@ namespace CardGames.ConsoleVersion
                 Console.WriteLine();
                 Console.WriteLine($"{core.player.Name}'s score: {core.player.Score}");
                 Console.WriteLine();
-                GetHiddenCardAndPrintOut();
-                GetPlayersCardAndPrintOut();
+                core.GetOpenCard();
+                core.GetPlayersCard();
+                PrintCards(core.OpenCard, core.PlayersCard, true);
                 core.CheckHighOrLow();
                 GetPlayerGuess();
                 core.PutBackCards();
@@ -150,19 +151,23 @@ namespace CardGames.ConsoleVersion
 
         private void PrintResult()
         {
+            Console.Clear();
+            Header();
+            Console.WriteLine("*********");
+            Console.WriteLine(core.Result);
+            Console.WriteLine("*********");
             Console.WriteLine();
+            Console.WriteLine($"You guessed {core.Guess}");
             Console.WriteLine();
-            Console.WriteLine(core.result);
-            Console.Write("Hidden card: ");
-            Console.WriteLine(core.hiddenCard);
-            Console.Write("Your card: ");
-            Console.WriteLine(core.playersCard);
+            PrintCards(core.OpenCard, core.PlayersCard, false);
+
         }
 
         private void GetPlayerGuess()
         {
             bool correctInput = false;
 
+            Console.WriteLine();
             Console.Write("Is your card [H]igher or [L]ower? >");
             do
             {
@@ -173,11 +178,13 @@ namespace CardGames.ConsoleVersion
                 switch (key.Key)
                 {
                     case ConsoleKey.H:
-                        core.result = core.high ? "RIGHT" : "WRONG";
+                        core.Result = core.high ? "RIGHT" : "WRONG";
+                        core.Guess = "higher";
                         correctInput = true;
                         break;
                     case ConsoleKey.L:
-                        core.result = core.high ? "WRONG" : "RIGHT";
+                        core.Result = core.high ? "WRONG" : "RIGHT";
+                        core.Guess = "lower";
                         correctInput = true;
                         break;
                     default:
@@ -187,18 +194,35 @@ namespace CardGames.ConsoleVersion
             } while (!correctInput);
         }
 
-
-
-        private void GetPlayersCardAndPrintOut()
+        private void PrintCards(PlayingCard open, PlayingCard players, bool hidden)
         {
-            core.GetPlayersCard();
-            Console.Write("Your card: ");
-            Console.WriteLine(core.playersCard);
+            var u = '\u203E';
+
+            if (hidden)
+            {
+                Console.WriteLine($"___________    ___________\n" +
+                    $"|    _    |    |{open.ToString().PadRight(9)}|\n" +
+                    $"|   /  \\  |    |         |\n" +
+                    $"|      /  |    |         |\n" +
+                    $"|     |   |    |         |\n" +
+                    $"|     *   |    |{open.ToString().PadLeft(9)}|\n" +
+                    $"{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}    {u}{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}");
+            }
+            else
+            {
+                Console.WriteLine($"___________    ___________\n" +
+                    $"|{players.ToString().PadRight(9)}|    |{open.ToString().PadRight(9)}|\n" +
+                    $"|         |    |         |\n" +
+                    $"|         |    |         |\n" +
+                    $"|         |    |         |\n" +
+                    $"|{players.ToString().PadLeft(9)}|    |{open.ToString().PadLeft(9)}|\n" +
+                    $"{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}    {u}{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}");
+            }
         }
 
         private void GetHiddenCardAndPrintOut()
         {
-            core.GetHiddenCard();
+            core.GetPlayersCard();
             Console.Write("Hidden card: ");
             Console.WriteLine("*****");
         }

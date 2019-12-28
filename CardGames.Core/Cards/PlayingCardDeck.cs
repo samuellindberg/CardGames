@@ -26,7 +26,15 @@ namespace CardGames.Core.Cards
             {
                 for (int r = 1; r <= 13; r++)
                 {
-                    Cards.Add(new PlayingCard((CardRank)r , (CardSuit)s, DeckUtils.suitSymbols[s]));
+                    string rankChar;
+                    CardRank enumRank = (CardRank)r;
+
+                    if (r <= 10)
+                        rankChar = $"{r}";
+                    else
+                        rankChar = $"{enumRank.ToString().Substring(0, 1)}";
+
+                    Cards.Add(new PlayingCard((CardRank)r , (CardSuit)s, DeckUtils.suitSymbols[s], rankChar));
                 }
             }
         }

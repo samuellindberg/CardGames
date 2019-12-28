@@ -15,10 +15,11 @@ namespace CardGames.Core
 
         public PlayingCardDeck Deck { get; set; }
         public List<PlayingCard> shuffledDeck;
-        public PlayingCard hiddenCard;
-        public PlayingCard playersCard;
+        public PlayingCard PlayersCard { get; set; }
+        public PlayingCard OpenCard { get; set; }
         public bool high = false;
-        public string result;
+        public string Result { get; set; }
+        public string Guess { get; set; }
         public bool tryAgain;
         public Player player;
 
@@ -31,23 +32,23 @@ namespace CardGames.Core
 
         public void CheckHighOrLow()
         {
-            if ((int)hiddenCard.Rank < (int)playersCard.Rank)
+            if ((int)PlayersCard.Rank < (int)OpenCard.Rank)
                 high = true;
-            else if ((int)hiddenCard.Rank == (int)playersCard.Rank)
+            else if ((int)PlayersCard.Rank == (int)OpenCard.Rank)
             {
-                if ((int)hiddenCard.Suit > (int)playersCard.Suit)
+                if ((int)PlayersCard.Suit > (int)OpenCard.Suit)
                     high = true;
             }
         }
 
-        public void GetPlayersCard()
+        public void GetOpenCard()
         {
-            playersCard = shuffledDeck.PickFirst();
+            OpenCard = shuffledDeck.PickFirst();
         }
 
-        public void GetHiddenCard()
+        public void GetPlayersCard()
         {
-            hiddenCard = shuffledDeck.PickFirst();
+            PlayersCard = shuffledDeck.PickFirst();
         }
 
         public void CreateNewPlayer(string name)
@@ -65,8 +66,8 @@ namespace CardGames.Core
 
         public void PutBackCards()
         {
-            shuffledDeck.InsertAtEnd(hiddenCard);
-            shuffledDeck.InsertAtEnd(playersCard);
+            shuffledDeck.InsertAtEnd(PlayersCard);
+            shuffledDeck.InsertAtEnd(OpenCard);
         }
 
     }

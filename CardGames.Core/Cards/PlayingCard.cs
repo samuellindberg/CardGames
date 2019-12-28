@@ -9,20 +9,22 @@ namespace CardGames.Core.Cards
 {
     public class PlayingCard
     {
-        public PlayingCard(CardRank rank, CardSuit suit, char suitSymbol)
+        public PlayingCard(CardRank rank, CardSuit suit, char suitSymbol, string rankChar)
         {
             Rank = rank;
             Suit = suit;
             SuitSymbol = suitSymbol;
+            RankChar = rankChar;
         }
 
         public CardRank Rank { get; }
         public CardSuit Suit { get; }
         public char SuitSymbol { get; set; }
+        public string RankChar { get; set; }
 
         public override string ToString()
         {
-            return $"{SuitSymbol}{Rank}";
+            return $"{SuitSymbol}{RankChar}";
         }
     }
 }
