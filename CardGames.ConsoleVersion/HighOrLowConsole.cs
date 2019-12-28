@@ -86,7 +86,7 @@ namespace CardGames.ConsoleVersion
                     isPlayer = true;
                 }
             } while (!isPlayer);
-            
+
 
         }
 
@@ -121,7 +121,7 @@ namespace CardGames.ConsoleVersion
             } while (core.tryAgain);
         }
 
-        
+
 
         private bool TryAgainOrMenu()
         {
@@ -161,20 +161,30 @@ namespace CardGames.ConsoleVersion
 
         private void GetPlayerGuess()
         {
+            bool correctInput = false;
+
             Console.Write("Is your card [H]igher or [L]ower? >");
-            var key = Console.ReadKey(true);
-
-            Console.WriteLine();
-
-            switch (key.Key)
+            do
             {
-                case ConsoleKey.H:
-                    core.result = core.high ? "RIGHT" : "WRONG";
-                    break;
-                case ConsoleKey.L:
-                    core.result = core.high ? "WRONG" : "RIGHT";
-                    break;
-            }
+                var key = Console.ReadKey(true);
+
+                Console.WriteLine();
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.H:
+                        core.result = core.high ? "RIGHT" : "WRONG";
+                        correctInput = true;
+                        break;
+                    case ConsoleKey.L:
+                        core.result = core.high ? "WRONG" : "RIGHT";
+                        correctInput = true;
+                        break;
+                    default:
+                        Console.WriteLine("Press [H] or [L].");
+                        break;
+                }
+            } while (!correctInput);
         }
 
 
