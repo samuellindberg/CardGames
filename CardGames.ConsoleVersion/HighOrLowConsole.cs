@@ -136,7 +136,7 @@ namespace CardGames.ConsoleVersion
                 {
                     case ConsoleKey.T:
                         return true;
-                    case ConsoleKey.L:
+                    case ConsoleKey.M:
                         return false;
                     default:
                         Console.WriteLine("Please enter [T] or [M].");

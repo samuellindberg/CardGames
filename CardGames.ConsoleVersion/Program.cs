@@ -9,28 +9,38 @@ namespace CardGames.ConsoleVersion
         static void Main(string[] args)
         {
             MainMenu();
-            
+
         }
 
         public static void MainMenu()
         {
-            Console.WriteLine("C A R D   G A M E S");
-            Console.WriteLine();
-            Console.WriteLine("[1] High Or Low");
-            Console.WriteLine();
-            Console.Write(">");
-            var key = Console.ReadKey(true);
+            bool isRunning = true;
 
-            switch (key.Key)
+            do
             {
-                case ConsoleKey.D1:
-                case ConsoleKey.NumPad1:
-                    var game = new HighOrLowConsole();
-                    game.Play();
-                    break;
-                default:
-                    break;
-            }
+                Console.Clear();
+                Console.WriteLine("C A R D   G A M E S");
+                Console.WriteLine();
+                Console.WriteLine("[1] High Or Low");
+                Console.WriteLine("[Q]uit");
+                Console.Write(">");
+                var key = Console.ReadKey(true);
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
+                        var game = new HighOrLowConsole();
+                        game.Play();
+                        break;
+                    case ConsoleKey.Q:
+                        isRunning = false;
+                        break;
+                    default:
+                        break;
+                }
+
+            } while (isRunning);
         }
     }
 }
