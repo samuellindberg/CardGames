@@ -22,7 +22,6 @@ namespace CardGames.ConsoleVersion
 
         private void Menu()
         {
-            Console.WriteLine("MENU");
             Console.WriteLine("[N]ew game");
             Console.WriteLine("[B]ack to main");
             Console.Write(">");
@@ -90,14 +89,6 @@ namespace CardGames.ConsoleVersion
 
         }
 
-        private static void Header()
-        {
-            Console.WriteLine($"---------------------");
-            Console.WriteLine("H I G H   O R   L O W");
-            Console.WriteLine($"{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}");
-            Console.WriteLine();
-        }
-
         private void RunGame()
         {
             var deck = new PlayingCardDeck();
@@ -108,7 +99,7 @@ namespace CardGames.ConsoleVersion
                 Header();
                 Console.WriteLine("Guess if your card is higher or lower than the open card.");
                 Console.WriteLine();
-                Console.WriteLine($"{core.player.Name}'s score: {core.player.Score}");
+                Console.WriteLine($"{core.Player.Name}'s score: {core.Player.Score}");
                 Console.WriteLine();
                 core.GetOpenCard();
                 core.GetPlayersCard();
@@ -122,7 +113,13 @@ namespace CardGames.ConsoleVersion
             } while (core.tryAgain);
         }
 
-
+        private static void Header()
+        {
+            Console.WriteLine($"---------------------");
+            Console.WriteLine("H I G H   O R   L O W");
+            Console.WriteLine($"{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}");
+            Console.WriteLine();
+        }
 
         private bool TryAgainOrMenu()
         {
@@ -138,6 +135,7 @@ namespace CardGames.ConsoleVersion
                     case ConsoleKey.T:
                         return true;
                     case ConsoleKey.M:
+                        core.service.UpdateHighscore(core.Player);
                         return false;
                     default:
                         Console.WriteLine("Please enter [T] or [M].");
@@ -158,6 +156,7 @@ namespace CardGames.ConsoleVersion
             Console.WriteLine("*********");
             Console.WriteLine();
             Console.WriteLine($"You guessed {core.Guess}");
+            Console.WriteLine($"New score: {core.Player.Score} ({(core.Result == "RIGHT" ? "+1" : "-1")})");
             Console.WriteLine();
             PrintCards(core.OpenCard, core.PlayersCard, false);
 
@@ -180,11 +179,13 @@ namespace CardGames.ConsoleVersion
                     case ConsoleKey.H:
                         core.Result = core.high ? "RIGHT" : "WRONG";
                         core.Guess = "higher";
+                        core.Player.Score += core.high ? 1 : -1;
                         correctInput = true;
                         break;
                     case ConsoleKey.L:
                         core.Result = core.high ? "WRONG" : "RIGHT";
                         core.Guess = "lower";
+                        core.Player.Score += core.high ? -1 : 1;
                         correctInput = true;
                         break;
                     default:
@@ -218,13 +219,6 @@ namespace CardGames.ConsoleVersion
                     $"|{players.ToString().PadLeft(9)}|    |{open.ToString().PadLeft(9)}|\n" +
                     $"{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}    {u}{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}");
             }
-        }
-
-        private void GetHiddenCardAndPrintOut()
-        {
-            core.GetPlayersCard();
-            Console.Write("Hidden card: ");
-            Console.WriteLine("*****");
         }
 
         public void PrintOutHighScore()

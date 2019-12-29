@@ -36,5 +36,22 @@ namespace CardGames.Core.Models
                 Score = hs.Score,
             };
         }
+
+        public void UpdateHighscore(Player p)
+        {
+            if (p.Id == null)
+                ctx.HighScore.Add(new HighScore
+                {
+                    Name = p.Name,
+                    Score = p.Score,
+                });
+            else
+            {
+                var hs = ctx.HighScore.Single(h => h.Id == p.Id);
+                hs.Score = p.Score;
+            }
+
+            ctx.SaveChanges();
+        }
     }
 }

@@ -21,7 +21,8 @@ namespace CardGames.Core
         public string Result { get; set; }
         public string Guess { get; set; }
         public bool tryAgain;
-        public Player player;
+        public Player Player { get; set; }
+        
 
         public HighOrLowCore(HighScoreServices service)
         {
@@ -53,15 +54,17 @@ namespace CardGames.Core
 
         public void CreateNewPlayer(string name)
         {
-            player = new Player
+            Player = new Player
             {
+                Id = null,
                 Name = name,
+                Score = 0,
             };
         }
 
         public void GetPlayer(string name)
         {
-            player = service.GetPlayerByName(name);
+            Player = service.GetPlayerByName(name);
         }
 
         public void PutBackCards()
