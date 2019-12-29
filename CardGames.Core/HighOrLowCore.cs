@@ -33,11 +33,12 @@ namespace CardGames.Core
 
         public void CheckHighOrLow()
         {
-            if ((int)PlayersCard.Rank < (int)OpenCard.Rank)
+            high = false;
+            if ((int)PlayersCard.Rank > (int)OpenCard.Rank)
                 high = true;
             else if ((int)PlayersCard.Rank == (int)OpenCard.Rank)
             {
-                if ((int)PlayersCard.Suit > (int)OpenCard.Suit)
+                if ((int)PlayersCard.Suit < (int)OpenCard.Suit)
                     high = true;
             }
         }

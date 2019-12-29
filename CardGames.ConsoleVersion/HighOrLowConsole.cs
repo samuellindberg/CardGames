@@ -23,7 +23,8 @@ namespace CardGames.ConsoleVersion
         private void Menu()
         {
             Console.WriteLine("[N]ew game");
-            Console.WriteLine("[B]ack to main");
+            Console.WriteLine("[H]ighscore");
+            Console.WriteLine("[B]ack to main menu");
             Console.Write(">");
             var key = Console.ReadKey(true);
 
@@ -33,6 +34,9 @@ namespace CardGames.ConsoleVersion
                     Console.Clear();
                     GetPlayerName();
                     RunGame();
+                    break;
+                case ConsoleKey.H:
+                    PrintOutHighScore();
                     break;
                 case ConsoleKey.B:
                     Console.Clear();
@@ -115,7 +119,7 @@ namespace CardGames.ConsoleVersion
 
         private static void Header()
         {
-            Console.WriteLine($"---------------------");
+            Console.WriteLine($"{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}");
             Console.WriteLine("H I G H   O R   L O W");
             Console.WriteLine($"{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}");
             Console.WriteLine();
@@ -233,6 +237,9 @@ namespace CardGames.ConsoleVersion
             {
                 Console.WriteLine($"{h.Name} - {h.Score}");
             }
+
+            Console.Write("Press any key to go back.");
+            Console.ReadKey(true);
         }
 
 
