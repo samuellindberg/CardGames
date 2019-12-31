@@ -28,6 +28,7 @@ namespace CardGames.ConsoleVersion
         private void Menu()
         {
             Console.WriteLine("[N]ew game");
+            Console.WriteLine("[R]ules");
             Console.WriteLine("[H]ighscore");
             Console.WriteLine("[B]ack to main menu");
             Console.WriteLine();
@@ -41,6 +42,9 @@ namespace CardGames.ConsoleVersion
                     GetPlayerName();
                     RunGame();
                     break;
+                case ConsoleKey.R:
+                    PrintOutRules();
+                    break;
                 case ConsoleKey.H:
                     PrintOutHighScore();
                     break;
@@ -48,6 +52,16 @@ namespace CardGames.ConsoleVersion
                     isRunning = false;
                     break;
             }
+        }
+
+        private void PrintOutRules()
+        {
+            Console.Clear();
+            Header();
+            Console.WriteLine("Guess if hidden card is higher or lower than the open card. Right answer gives +1 point, wrong answer gives -1 point.");
+            Console.WriteLine();
+            Console.Write("Press any key to go back.");
+            Console.ReadKey(true);
         }
 
         private void GetPlayerName()
@@ -235,7 +249,6 @@ namespace CardGames.ConsoleVersion
             var highScoreList = core.service.GetHighScores();
             Console.Clear();
             Header();
-            Console.WriteLine();
             Console.WriteLine("-------------------");
             Console.WriteLine("H I G H   S C O R E");
             Console.WriteLine("-------------------");
@@ -245,6 +258,7 @@ namespace CardGames.ConsoleVersion
                 Console.WriteLine($"{h.Name} - {h.Score}");
             }
 
+            Console.WriteLine();
             Console.Write("Press any key to go back.");
             Console.ReadKey(true);
         }
