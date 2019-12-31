@@ -1,4 +1,5 @@
-﻿using CardGames.Core.Models.Entities;
+﻿using CardGames.Core.Cards;
+using CardGames.Core.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,7 @@ namespace CardGames.Core.Models
                 Id = hs.Id,
                 Name = hs.Name,
                 HighOrLowScore = hs.HighOrLowScore,
+                CardsOnHand = new List<PlayingCard>(),
             };
         }
 
@@ -61,6 +63,7 @@ namespace CardGames.Core.Models
                 Id = null,
                 Name = name,
                 ChicagoScore = 0,
+                CardsOnHand = new List<PlayingCard>(),
             };
         }
     }

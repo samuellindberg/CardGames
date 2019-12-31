@@ -27,6 +27,11 @@ namespace CardGames.Core
             //Player = Service.GetPlayerByName(name);
         }
 
-        
+        public void InitChicago(int numOfPlayers)
+        {
+            var deck = new PlayingCardDeck();
+            ShuffledDeck = DeckUtils.ShuffleDeck(deck.Cards);
+            DeckUtils.DealCards(Players, ShuffledDeck, 5);
+        }
     }
 }

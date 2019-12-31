@@ -57,8 +57,7 @@ namespace CardGames.ConsoleVersion
             {
                 case ConsoleKey.N:
                     Console.Clear();
-                    NumOfPlayers = GetNumberOfPlayers();
-                    GetPlayersNames(NumOfPlayers);
+                    
                     RunGame();
                     break;
                 case ConsoleKey.R:
@@ -86,8 +85,10 @@ namespace CardGames.ConsoleVersion
 
         private void RunGame()
         {
-            var deck = new PlayingCardDeck();
-            core.ShuffledDeck = DeckUtils.ShuffleDeck(deck.Cards);
+            NumOfPlayers = GetNumberOfPlayers();
+            GetPlayersNames(NumOfPlayers);
+            core.InitChicago(NumOfPlayers);
+
             do
             {
                 Console.Clear();

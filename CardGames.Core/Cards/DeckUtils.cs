@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CardGames.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,5 +26,13 @@ namespace CardGames.Core.Cards
 
         public static void InsertAtEnd(this List<PlayingCard> deck, PlayingCard card) => deck.Add(card);
 
+        public static void DealCards(Player[] players, List<PlayingCard> deck, int numOfCards)
+        {
+            for (int i = 0; i < numOfCards * players.Length; i++)
+            {
+                var j = i % players.Length;
+                players[j].CardsOnHand.Add(deck.PickFirst());
+            }
+        }
     }
 }
