@@ -1,19 +1,32 @@
 ﻿using CardGames.Core.Cards;
+using CardGames.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SamUtils;
+using CardGames.Core.Models;
 
 namespace CardGames.ConsoleVersion
 {
     public class ChicagoConsole
     {
         bool isRunning = true;
+        private readonly ChicagoCore core;
+        CardGamesUtils utils;
+
+        public ChicagoConsole(ChicagoCore core)
+        {
+            this.core = core;
+            utils = new CardGamesUtils(core);
+
+        }
+
+        public int NumOfPlayers { get; set; }
 
         public void Run()
         {
-
             do
             {
                 Console.Clear();
@@ -30,8 +43,6 @@ namespace CardGames.ConsoleVersion
             Console.WriteLine($"{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}");
             Console.WriteLine();
         }
-
-
         private void Menu()
         {
             Console.WriteLine("[N]ew game");
@@ -46,7 +57,8 @@ namespace CardGames.ConsoleVersion
             {
                 case ConsoleKey.N:
                     Console.Clear();
-                    GetPlayerName();
+                    NumOfPlayers = GetNumberOfPlayers();
+                    GetPlayersNames(NumOfPlayers);
                     RunGame();
                     break;
                 case ConsoleKey.R:
@@ -61,12 +73,60 @@ namespace CardGames.ConsoleVersion
             }
         }
 
-        private void PrintOutHighScore()
+        private void GetPlayersNames(int numOfPlayers)
         {
-            throw new NotImplementedException();
+            core.Players = new Player[numOfPlayers];
+
+            for (int i = 0; i < core.Players.Length; i++)
+            {
+                Console.Write($"Enter name for player {i + 1}: ");
+                core.Players[i] = utils.GetPlayerName();
+            }
         }
 
         private void RunGame()
+        {
+            var deck = new PlayingCardDeck();
+            core.ShuffledDeck = DeckUtils.ShuffleDeck(deck.Cards);
+            do
+            {
+                Console.Clear();
+                Header();
+                //Console.WriteLine($"{core.Player.Name}'s score: {core.Player.HighOrLowScore}");
+                Console.WriteLine();
+                Console.ReadKey();
+
+
+            } while (true);
+        }
+
+        private int GetNumberOfPlayers()
+        {
+            bool correctInput = false;
+            int input = 0;
+
+            do
+            {
+                Console.WriteLine();
+                Console.Write("Enter hor many players (2-6): ");
+                try
+                {
+                    input = Console.ReadLine().IsInt(2, 6);
+                    correctInput = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    correctInput = false;
+                }
+
+            } while (!correctInput);
+
+            return input;
+
+        }
+
+        private void PrintOutHighScore()
         {
             throw new NotImplementedException();
         }

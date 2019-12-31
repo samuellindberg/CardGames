@@ -10,11 +10,20 @@ namespace CardGames.ConsoleVersion
 {
     class HighOrLowConsole
     {
-        HighOrLowCore core = new HighOrLowCore(new HighScoreServices(new CardGamesContext()));
+        HighOrLowCore core;
+        CardGamesUtils utils;
+
+        public HighOrLowConsole(HighOrLowCore core)
+        {
+            this.core = core;
+            utils = new CardGamesUtils(core);
+        }
+
         bool isRunning = true;
 
         public void Run()
         {
+            
 
             do
             {
@@ -39,7 +48,7 @@ namespace CardGames.ConsoleVersion
             {
                 case ConsoleKey.N:
                     Console.Clear();
-                    GetPlayerName();
+                    core.Player = utils.GetPlayerName();
                     RunGame();
                     break;
                 case ConsoleKey.R:
@@ -64,65 +73,15 @@ namespace CardGames.ConsoleVersion
             Console.ReadKey(true);
         }
 
-        private void GetPlayerName()
-        {
-            bool isRegistered;
-            bool isPlayer = false;
-            bool correctInput = false;
-
-            do
-            {
-                Console.Write("Enter your name: ");
-                string input = Console.ReadLine();
-                isRegistered = core.service.CheckIfRegistered(input);
-                if (isRegistered)
-                {
-                    Console.WriteLine("Name is taken!");
-                    Console.WriteLine($"Are you {input}? y/n ");
-                    do
-                    {
-                        var key = Console.ReadKey(true);
-
-                        switch (key.Key)
-                        {
-                            case ConsoleKey.Y:
-                                isPlayer = true;
-                                correctInput = true;
-                                break;
-                            case ConsoleKey.N:
-                                isPlayer = false;
-                                correctInput = true;
-                                break;
-                            default:
-                                Console.WriteLine("Please enter [Y] or [N].");
-                                correctInput = false;
-                                break;
-                        }
-                    } while (!correctInput);
-
-                    core.GetPlayer(input);
-                }
-                else
-                {
-                    core.CreateNewPlayer(input);
-                    isPlayer = true;
-                }
-            } while (!isPlayer);
-
-
-        }
-
         private void RunGame()
         {
             var deck = new PlayingCardDeck();
-            core.shuffledDeck = DeckUtils.ShuffleDeck(deck.Cards);
+            core.ShuffledDeck = DeckUtils.ShuffleDeck(deck.Cards);
             do
             {
                 Console.Clear();
                 Header();
-                Console.WriteLine("Guess if your card is higher or lower than the open card.");
-                Console.WriteLine();
-                Console.WriteLine($"{core.Player.Name}'s score: {core.Player.Score}");
+                Console.WriteLine($"{core.Player.Name}'s score: {core.Player.HighOrLowScore}");
                 Console.WriteLine();
                 core.GetOpenCard();
                 core.GetPlayersCard();
@@ -158,7 +117,7 @@ namespace CardGames.ConsoleVersion
                     case ConsoleKey.T:
                         return true;
                     case ConsoleKey.M:
-                        core.service.UpdateHighscore(core.Player);
+                        core.Service.UpdateHighscore(core.Player);
                         return false;
                     default:
                         Console.WriteLine("Please enter [T] or [M].");
@@ -179,7 +138,7 @@ namespace CardGames.ConsoleVersion
             Console.WriteLine("*********");
             Console.WriteLine();
             Console.WriteLine($"You guessed {core.Guess}");
-            Console.WriteLine($"New score: {core.Player.Score} ({(core.Result == "RIGHT" ? "+1" : "-1")})");
+            Console.WriteLine($"New score: {core.Player.HighOrLowScore} ({(core.Result == "RIGHT" ? "+1" : "-1")})");
             Console.WriteLine();
             PrintCards(core.OpenCard, core.PlayersCard, false);
 
@@ -202,13 +161,13 @@ namespace CardGames.ConsoleVersion
                     case ConsoleKey.H:
                         core.Result = core.high ? "RIGHT" : "WRONG";
                         core.Guess = "higher";
-                        core.Player.Score += core.high ? 1 : -1;
+                        core.Player.HighOrLowScore += core.high ? 1 : -1;
                         correctInput = true;
                         break;
                     case ConsoleKey.L:
                         core.Result = core.high ? "WRONG" : "RIGHT";
                         core.Guess = "lower";
-                        core.Player.Score += core.high ? -1 : 1;
+                        core.Player.HighOrLowScore += core.high ? -1 : 1;
                         correctInput = true;
                         break;
                     default:
@@ -246,7 +205,7 @@ namespace CardGames.ConsoleVersion
 
         public void PrintOutHighScore()
         {
-            var highScoreList = core.service.GetHighScores();
+            var highScoreList = core.Service.GetHighScores();
             Console.Clear();
             Header();
             Console.WriteLine("-------------------");

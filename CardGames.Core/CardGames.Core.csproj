@@ -145,6 +145,7 @@
     <Compile Include="HighOrLowCore.cs" />
     <Compile Include="Enums\CardSuit.cs" />
     <Compile Include="Enums\CardRank.cs" />
+    <Compile Include="ICardGameCore.cs" />
     <Compile Include="Models\Entities\CardGamesContext.cs" />
     <Compile Include="Models\Entities\HighScore.cs" />
     <Compile Include="Models\HighScoreServices.cs" />

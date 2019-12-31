@@ -33,7 +33,7 @@ namespace CardGames.Core.Models
             {
                 Id = hs.Id,
                 Name = hs.Name,
-                Score = hs.HighOrLowScore,
+                HighOrLowScore = hs.HighOrLowScore,
             };
         }
 
@@ -43,15 +43,25 @@ namespace CardGames.Core.Models
                 ctx.HighScore.Add(new HighScore
                 {
                     Name = p.Name,
-                    HighOrLowScore = p.Score,
+                    HighOrLowScore = p.HighOrLowScore,
                 });
             else
             {
                 var hs = ctx.HighScore.Single(h => h.Id == p.Id);
-                hs.HighOrLowScore = p.Score;
+                hs.HighOrLowScore = p.HighOrLowScore;
             }
 
             ctx.SaveChanges();
+        }
+
+        public Player CreateNewPlayer(string name)
+        {
+            return new Player
+            {
+                Id = null,
+                Name = name,
+                ChicagoScore = 0,
+            };
         }
     }
 }

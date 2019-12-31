@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace CardGames.Core
 {
-    public class HighOrLowCore
+    public class HighOrLowCore : ICardGameCore
     {
-        public readonly HighScoreServices service;
+        public HighScoreServices Service { get; }
 
         public PlayingCardDeck Deck { get; set; }
-        public List<PlayingCard> shuffledDeck;
+        public List<PlayingCard> ShuffledDeck { get; set; }
         public PlayingCard PlayersCard { get; set; }
         public PlayingCard OpenCard { get; set; }
         public bool high = false;
@@ -26,7 +26,7 @@ namespace CardGames.Core
 
         public HighOrLowCore(HighScoreServices service)
         {
-            this.service = service;
+            Service = service;
             Deck = new PlayingCardDeck();
             Deck.Cards = DeckUtils.ShuffleDeck(Deck.Cards);
         }
@@ -45,12 +45,12 @@ namespace CardGames.Core
 
         public void GetOpenCard()
         {
-            OpenCard = shuffledDeck.PickFirst();
+            OpenCard = ShuffledDeck.PickFirst();
         }
 
         public void GetPlayersCard()
         {
-            PlayersCard = shuffledDeck.PickFirst();
+            PlayersCard = ShuffledDeck.PickFirst();
         }
 
         public void CreateNewPlayer(string name)
@@ -59,19 +59,19 @@ namespace CardGames.Core
             {
                 Id = null,
                 Name = name,
-                Score = 0,
+                HighOrLowScore = 0,
             };
         }
 
         public void GetPlayer(string name)
         {
-            Player = service.GetPlayerByName(name);
+            Player = Service.GetPlayerByName(name);
         }
 
         public void PutBackCards()
         {
-            shuffledDeck.InsertAtEnd(PlayersCard);
-            shuffledDeck.InsertAtEnd(OpenCard);
+            ShuffledDeck.InsertAtEnd(PlayersCard);
+            ShuffledDeck.InsertAtEnd(OpenCard);
         }
 
     }
