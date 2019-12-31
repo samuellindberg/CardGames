@@ -8,7 +8,8 @@ namespace CardGames.Core.Enums
 {
     public enum CardRank
     {
-        Two = 2,
+        Ace = 1,
+        Two,
         Three,
         Four,
         Five,
@@ -20,6 +21,5 @@ namespace CardGames.Core.Enums
         Jack,
         Queen,
         King,
-        Ace,
     }
 }
