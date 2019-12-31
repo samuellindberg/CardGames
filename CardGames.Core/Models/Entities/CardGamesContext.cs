@@ -31,7 +31,7 @@ namespace CardGames.Core.Models.Entities
             modelBuilder.Entity<HighScore>(entity =>
             {
                 entity.HasIndex(e => e.Name)
-                    .HasName("UQ__HighScor__737584F61B039264")
+                    .HasName("UQ__HighScor__737584F6FD426CDC")
                     .IsUnique();
 
                 entity.Property(e => e.Name)

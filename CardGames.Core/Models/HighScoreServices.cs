@@ -23,7 +23,7 @@ namespace CardGames.Core.Models
 
         public List<HighScore> GetHighScores()
         {
-            return ctx.HighScore.Select(h => h).OrderByDescending(h => h.Score).ToList();
+            return ctx.HighScore.Select(h => h).OrderByDescending(h => h.HighOrLowScore).ToList();
         }
 
         public Player GetPlayerByName(string name)
@@ -33,7 +33,7 @@ namespace CardGames.Core.Models
             {
                 Id = hs.Id,
                 Name = hs.Name,
-                Score = hs.Score,
+                Score = hs.HighOrLowScore,
             };
         }
 
@@ -43,12 +43,12 @@ namespace CardGames.Core.Models
                 ctx.HighScore.Add(new HighScore
                 {
                     Name = p.Name,
-                    Score = p.Score,
+                    HighOrLowScore = p.Score,
                 });
             else
             {
                 var hs = ctx.HighScore.Single(h => h.Id == p.Id);
-                hs.Score = p.Score;
+                hs.HighOrLowScore = p.Score;
             }
 
             ctx.SaveChanges();

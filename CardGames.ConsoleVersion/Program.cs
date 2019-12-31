@@ -35,7 +35,7 @@ namespace CardGames.ConsoleVersion
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
                         var game = new HighOrLowConsole();
-                        game.Play();
+                        game.Run();
                         break;
                     case ConsoleKey.Q:
                         isRunning = false;

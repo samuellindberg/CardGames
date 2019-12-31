@@ -13,7 +13,7 @@ namespace CardGames.ConsoleVersion
         HighOrLowCore core = new HighOrLowCore(new HighScoreServices(new CardGamesContext()));
         bool isRunning = true;
 
-        public void Play()
+        public void Run()
         {
 
             do
@@ -255,7 +255,7 @@ namespace CardGames.ConsoleVersion
 
             foreach (var h in highScoreList)
             {
-                Console.WriteLine($"{h.Name} - {h.Score}");
+                Console.WriteLine($"{h.Name} - {h.HighOrLowScore}");
             }
 
             Console.WriteLine();
