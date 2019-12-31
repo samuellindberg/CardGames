@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using CardGames.Core;
 using CardGames.Core.Cards;
 
@@ -8,6 +9,8 @@ namespace CardGames.ConsoleVersion
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
+
             MainMenu();
 
         }
@@ -23,6 +26,7 @@ namespace CardGames.ConsoleVersion
                 Console.WriteLine();
                 Console.WriteLine("[1] High Or Low");
                 Console.WriteLine("[Q]uit");
+                Console.WriteLine();
                 Console.Write(">");
                 var key = Console.ReadKey(true);
 

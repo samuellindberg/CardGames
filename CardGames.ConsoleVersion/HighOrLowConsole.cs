@@ -11,13 +11,18 @@ namespace CardGames.ConsoleVersion
     class HighOrLowConsole
     {
         HighOrLowCore core = new HighOrLowCore(new HighScoreServices(new CardGamesContext()));
+        bool isRunning = true;
 
         public void Play()
         {
-            Console.OutputEncoding = Encoding.UTF8;
-            Console.Clear();
-            Header();
-            Menu();
+
+            do
+            {
+                Console.Clear();
+                Header();
+                Menu();
+
+            } while (isRunning);
         }
 
         private void Menu()
@@ -25,6 +30,7 @@ namespace CardGames.ConsoleVersion
             Console.WriteLine("[N]ew game");
             Console.WriteLine("[H]ighscore");
             Console.WriteLine("[B]ack to main menu");
+            Console.WriteLine();
             Console.Write(">");
             var key = Console.ReadKey(true);
 
@@ -39,8 +45,7 @@ namespace CardGames.ConsoleVersion
                     PrintOutHighScore();
                     break;
                 case ConsoleKey.B:
-                    Console.Clear();
-                    Program.MainMenu();
+                    isRunning = false;
                     break;
             }
         }
@@ -228,7 +233,9 @@ namespace CardGames.ConsoleVersion
         public void PrintOutHighScore()
         {
             var highScoreList = core.service.GetHighScores();
-
+            Console.Clear();
+            Header();
+            Console.WriteLine();
             Console.WriteLine("-------------------");
             Console.WriteLine("H I G H   S C O R E");
             Console.WriteLine("-------------------");
