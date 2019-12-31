@@ -23,7 +23,7 @@ namespace CardGames.Core.Models
 
         public List<HighScore> GetHighScores()
         {
-            return ctx.HighScore.Select(h => h).ToList();
+            return ctx.HighScore.Select(h => h).OrderByDescending(h => h.Score).ToList();
         }
 
         public Player GetPlayerByName(string name)
