@@ -13,6 +13,7 @@ namespace CardGames.ConsoleVersion
     public class ChicagoConsole
     {
         bool isRunning = true;
+
         private readonly ChicagoCore core;
         CardGamesUtils utils;
 
@@ -92,16 +93,44 @@ namespace CardGames.ConsoleVersion
 
             do
             {
-                var currentPlayer = core.Players[core.TurnCounter % NumOfPlayers];
+                var currentPlayer = core.Players[core.TurnCounter % core.Players.Length];
                 Console.Clear();
                 Header();
                 Console.WriteLine($"{currentPlayer.Name}'s turn.");
                 Console.WriteLine();
+                PrintTable(core.Table);
                 PrintCards(currentPlayer.CardsOnHand);
-                Console.ReadKey();
+                GetPlayerAction(currentPlayer);
+
+                core.TurnCounter++;
+
+            } while (isRunning);
+        }
 
 
-            } while (true);
+
+        private void GetPlayerAction(Player player)
+        {
+            int cardIndex = 0;
+
+            Console.Write("Choose card to play. Enter number and press enter: ");
+            try
+            {
+                cardIndex = Console.ReadLine().IsInt(1, player.CardsOnHand.Count) - 1;
+
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Input is not a number. Try again.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("Card doesn't exist. Try again.");
+            }
+
+            core.PlayCard(player, cardIndex);
+
+            Console.ReadKey();
         }
 
         private int GetNumberOfPlayers()
@@ -129,10 +158,35 @@ namespace CardGames.ConsoleVersion
             return input;
 
         }
-        private void PrintCards(List<PlayingCard> cardsOnHand)
+        private void PrintTable(List<PlayingCard> table)
         {
             var u = '\u203E';
 
+            for (int i = 0; i < table.Count; i++) { Console.Write("___________    "); }
+            Console.WriteLine();
+            for (int i = 0; i < table.Count; i++) { Console.Write($"|{table[i].ToString().PadRight(9)}|    "); }
+            Console.WriteLine();
+            for (int i = 0; i < table.Count; i++) { Console.Write("|         |    "); }
+            Console.WriteLine();
+            for (int i = 0; i < table.Count; i++) { Console.Write("|         |    "); }
+            Console.WriteLine();
+            for (int i = 0; i < table.Count; i++) { Console.Write("|         |    "); }
+            Console.WriteLine();
+            for (int i = 0; i < table.Count; i++) { Console.Write($"|{table[i].ToString().PadLeft(9)}|    "); }
+            Console.WriteLine();
+            for (int i = 0; i < table.Count; i++) { Console.Write($"{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}    "); }
+            Console.WriteLine();
+            for (int i = 0; i < table.Count; i++) { Console.Write($"[{table[i].PlayedBy.Name.PadRight(9)}]    "); }
+            Console.WriteLine();
+            Console.WriteLine("------------------------------------");
+            Console.WriteLine();
+
+        }
+        private void PrintCards(List<PlayingCard> cardsOnHand)
+        {
+            var u = '\u203E';
+            for (int i = 0; i < cardsOnHand.Count; i++) { Console.Write($"    -{i + 1}-        "); }
+            Console.WriteLine();
             for (int i = 0; i < cardsOnHand.Count; i++) { Console.Write("___________    "); }
             Console.WriteLine();
             for (int i = 0; i < cardsOnHand.Count; i++) { Console.Write($"|{cardsOnHand[i].ToString().PadRight(9)}|    "); }
@@ -146,6 +200,7 @@ namespace CardGames.ConsoleVersion
             for (int i = 0; i < cardsOnHand.Count; i++) { Console.Write($"|{cardsOnHand[i].ToString().PadLeft(9)}|    "); }
             Console.WriteLine();
             for (int i = 0; i < cardsOnHand.Count; i++) { Console.Write($"{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}    "); }
+            Console.WriteLine();
         }
 
         private void PrintOutHighScore()

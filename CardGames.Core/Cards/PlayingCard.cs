@@ -1,4 +1,5 @@
 ﻿using CardGames.Core.Enums;
+using CardGames.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace CardGames.Core.Cards
         public CardSuit Suit { get; }
         public char SuitSymbol { get; set; }
         public string RankChar { get; set; }
+        public Player PlayedBy { get; set; }
 
         public override string ToString()
         {
