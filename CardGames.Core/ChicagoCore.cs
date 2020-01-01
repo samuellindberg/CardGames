@@ -21,6 +21,7 @@ namespace CardGames.Core
         public PlayingCardDeck Deck { get; set; }
         public List<PlayingCard> ShuffledDeck { get; set; }
         public Player[] Players { get; set; }
+        public int TurnCounter { get; set; }
 
         public void GetPlayer(string name)
         {

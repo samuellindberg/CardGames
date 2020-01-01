@@ -88,13 +88,16 @@ namespace CardGames.ConsoleVersion
             NumOfPlayers = GetNumberOfPlayers();
             GetPlayersNames(NumOfPlayers);
             core.InitChicago(NumOfPlayers);
+            core.TurnCounter = 0;
 
             do
             {
+                var currentPlayer = core.Players[core.TurnCounter % NumOfPlayers];
                 Console.Clear();
                 Header();
-                //Console.WriteLine($"{core.Player.Name}'s score: {core.Player.HighOrLowScore}");
+                Console.WriteLine($"{currentPlayer.Name}'s turn.");
                 Console.WriteLine();
+                PrintCards(currentPlayer.CardsOnHand);
                 Console.ReadKey();
 
 
@@ -125,6 +128,24 @@ namespace CardGames.ConsoleVersion
 
             return input;
 
+        }
+        private void PrintCards(List<PlayingCard> cardsOnHand)
+        {
+            var u = '\u203E';
+
+            for (int i = 0; i < cardsOnHand.Count; i++) { Console.Write("___________    "); }
+            Console.WriteLine();
+            for (int i = 0; i < cardsOnHand.Count; i++) { Console.Write($"|{cardsOnHand[i].ToString().PadRight(9)}|    "); }
+            Console.WriteLine();
+            for (int i = 0; i < cardsOnHand.Count; i++) { Console.Write("|         |    "); }
+            Console.WriteLine();
+            for (int i = 0; i < cardsOnHand.Count; i++) { Console.Write("|         |    "); }
+            Console.WriteLine();
+            for (int i = 0; i < cardsOnHand.Count; i++) { Console.Write("|         |    "); }
+            Console.WriteLine();
+            for (int i = 0; i < cardsOnHand.Count; i++) { Console.Write($"|{cardsOnHand[i].ToString().PadLeft(9)}|    "); }
+            Console.WriteLine();
+            for (int i = 0; i < cardsOnHand.Count; i++) { Console.Write($"{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}{u}    "); }
         }
 
         private void PrintOutHighScore()

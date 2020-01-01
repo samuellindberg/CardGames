@@ -24,7 +24,6 @@ namespace CardGames.ConsoleVersion
 
             do
             {
-                Console.Write("Enter your name: ");
                 string input = Console.ReadLine();
                 isRegistered = core.Service.CheckIfRegistered(input);
                 if (isRegistered)
