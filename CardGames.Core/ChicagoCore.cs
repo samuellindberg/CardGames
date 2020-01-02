@@ -25,6 +25,7 @@ namespace CardGames.Core
         public Player[] Players { get; set; }
         public int TurnCounter { get; set; }
         public List<PlayingCard> Table { get; set; }
+        public Player RoundWinner { get; set; }
 
         public void GetPlayer(string name)
         {
@@ -41,11 +42,44 @@ namespace CardGames.Core
 
         public void PlayCard(Player player, int cardIndex)
         {
-            bool havingSuit = CheckIfHavingSuit(player, Table);
+            if (Table.Count > 0
+                && CheckIfHavingSuit(player, Table)
+                && player.CardsOnHand[cardIndex].Suit != Table[0].Suit)
+            {
+                throw new ArgumentException("Unallowed card.");
+            }
+            else
+            {
+                player.CardsOnHand[cardIndex].PlayedBy = player;
+                Table.Add(player.CardsOnHand[cardIndex]);
+                player.CardsOnHand.RemoveAt(cardIndex);
+            }
 
-            player.CardsOnHand[cardIndex].PlayedBy = player;
-            Table.Add(player.CardsOnHand[cardIndex]);
-            player.CardsOnHand.RemoveAt(cardIndex);
+            //Check if everyone has played
+            if (Table.Count == Players.Length)
+            {
+                RoundWinner = Table[0].PlayedBy;
+                var highest = (int)Table[0].Rank;
+
+                for (int i = 1; i < Table.Count; i++)
+                {
+                    if (Table[0].Suit == Table[i].Suit)
+                    {
+                        if (highest < (int)Table[i].Rank)
+                        {
+                            highest = (int)Table[i].Rank;
+                            RoundWinner = Table[i].PlayedBy;
+                        }
+
+                    }
+                }
+
+                RoundWinner.Tricks.Add(Table);
+                Table.Clear();
+                TurnCounter = Array.IndexOf(Players, RoundWinner);
+            }
+            else
+                TurnCounter++;
         }
 
         private bool CheckIfHavingSuit(Player player, List<PlayingCard> table)

@@ -29,7 +29,7 @@ namespace CardGames.Core.Cards
                     string rankChar;
                     CardRank enumRank = (CardRank)r;
 
-                    if (r <= 10)
+                    if (r >= 2 && r <= 10)
                         rankChar = $"{r}";
                     else
                         rankChar = $"{enumRank.ToString().Substring(0, 1)}";

@@ -14,5 +14,6 @@ namespace CardGames.Core.Models
         public int? HighOrLowScore { get; set; }
         public int? ChicagoScore { get; set; }
         public List<PlayingCard> CardsOnHand { get; set; }
+        public List<List<PlayingCard>> Tricks { get; set; }
     }
 }

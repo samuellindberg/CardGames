@@ -36,6 +36,7 @@ namespace CardGames.Core.Models
                 Name = hs.Name,
                 HighOrLowScore = hs.HighOrLowScore,
                 CardsOnHand = new List<PlayingCard>(),
+                Tricks = new List<List<PlayingCard>>(),
             };
         }
 
@@ -64,6 +65,7 @@ namespace CardGames.Core.Models
                 Name = name,
                 ChicagoScore = 0,
                 CardsOnHand = new List<PlayingCard>(),
+                Tricks = new List<List<PlayingCard>>(),
             };
         }
     }

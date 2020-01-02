@@ -58,7 +58,7 @@ namespace CardGames.ConsoleVersion
             {
                 case ConsoleKey.N:
                     Console.Clear();
-                    
+
                     RunGame();
                     break;
                 case ConsoleKey.R:
@@ -96,13 +96,15 @@ namespace CardGames.ConsoleVersion
                 var currentPlayer = core.Players[core.TurnCounter % core.Players.Length];
                 Console.Clear();
                 Header();
-                Console.WriteLine($"{currentPlayer.Name}'s turn.");
                 Console.WriteLine();
                 PrintTable(core.Table);
+                Console.Write($"{currentPlayer.Name}'s turn. ");
+                if (core.Table.Count == 0)
+                    Console.Write("Plays first card.");
+                Console.WriteLine();
+                Console.WriteLine();
                 PrintCards(currentPlayer.CardsOnHand);
                 GetPlayerAction(currentPlayer);
-
-                core.TurnCounter++;
 
             } while (isRunning);
         }
@@ -111,26 +113,34 @@ namespace CardGames.ConsoleVersion
 
         private void GetPlayerAction(Player player)
         {
-            int cardIndex = 0;
+            int cardIndex;
+            bool correctCard = false;
 
-            Console.Write("Choose card to play. Enter number and press enter: ");
-            try
+            do
             {
-                cardIndex = Console.ReadLine().IsInt(1, player.CardsOnHand.Count) - 1;
 
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Input is not a number. Try again.");
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                Console.WriteLine("Card doesn't exist. Try again.");
-            }
+                Console.Write("Choose card to play. Enter number and press enter: ");
+                try
+                {
+                    cardIndex = Console.ReadLine().IsInt(1, player.CardsOnHand.Count) - 1;
+                    core.PlayCard(player, cardIndex);
+                    correctCard = true;
 
-            core.PlayCard(player, cardIndex);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Input is not a number. Try again.");
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    Console.WriteLine("Card doesn't exist. Try again.");
+                }
+                catch (ArgumentException)
+                {
+                    Console.WriteLine($"Card must be {core.Table[0].Suit.ToString()}");
+                }
+            } while (!correctCard);
 
-            Console.ReadKey();
         }
 
         private int GetNumberOfPlayers()
