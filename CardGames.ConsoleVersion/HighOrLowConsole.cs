@@ -113,7 +113,7 @@ namespace CardGames.ConsoleVersion
                     case ConsoleKey.T:
                         return true;
                     case ConsoleKey.M:
-                        core.Service.UpdateHighscore(core.Player);
+                        core.Service.UpdateHighOrLowHighscore(core.Player);
                         return false;
                     default:
                         Console.WriteLine("Please enter [T] or [M].");

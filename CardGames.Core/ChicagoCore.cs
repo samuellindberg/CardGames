@@ -60,7 +60,7 @@ namespace CardGames.Core
 
             CheckIfEveryonePlayedAndTrickWinner();
 
-            
+
         }
 
         private void CheckIfEveryonePlayedAndTrickWinner()
@@ -98,7 +98,10 @@ namespace CardGames.Core
             if (Players.Where(p => p.CardsOnHand.Count > 0).Count() == 0)
             {
                 GameWinner = RoundWinner;
-                GameWinner.ChicagoScore += 2;
+                if (GameWinner.ChicagoScore == null)
+                    GameWinner.ChicagoScore = 2;
+                else
+                    GameWinner.ChicagoScore += 2;
                 gameOver = true;
             }
 

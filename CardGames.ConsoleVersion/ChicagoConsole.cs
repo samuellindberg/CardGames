@@ -147,7 +147,7 @@ namespace CardGames.ConsoleVersion
                             correctInput = true;
                             break;
                         case ConsoleKey.N:
-                            core.Service.UpdateHighscore(core.Players);
+                            core.Service.UpdateChicagoHighscore(core.Players);
                             GetNewPlayersAndInitGame();
                             correctInput = true;
                             break;
@@ -180,7 +180,7 @@ namespace CardGames.ConsoleVersion
                     case ConsoleKey.T:
                         return true;
                     case ConsoleKey.M:
-                        core.Service.UpdateHighscore(core.Players);
+                        core.Service.UpdateChicagoHighscore(core.Players);
                         return false;
                     default:
                         Console.WriteLine("Please enter [T] or [M].");

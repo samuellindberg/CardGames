@@ -40,7 +40,7 @@ namespace CardGames.Core.Models
             };
         }
 
-        public void UpdateHighscore(Player p)
+        public void UpdateHighOrLowHighscore(Player p)
         {
             if (p.Id == null)
                 ctx.HighScore.Add(new HighScore
@@ -57,7 +57,7 @@ namespace CardGames.Core.Models
             ctx.SaveChanges();
         }
 
-        public void UpdateHighscore(Player[] p)
+        public void UpdateChicagoHighscore(Player[] p)
         {
             for (int i = 0; i < p.Length; i++)
             {
@@ -65,12 +65,12 @@ namespace CardGames.Core.Models
                     ctx.HighScore.Add(new HighScore
                     {
                         Name = p[i].Name,
-                        HighOrLowScore = p[i].HighOrLowScore,
+                        ChicagoScore = p[i].ChicagoScore,
                     });
                 else
                 {
                     var hs = ctx.HighScore.Single(h => h.Id == p[i].Id);
-                    hs.HighOrLowScore = p[i].HighOrLowScore;
+                    hs.ChicagoScore = p[i].ChicagoScore;
                 }
 
             }
