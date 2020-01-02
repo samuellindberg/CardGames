@@ -105,7 +105,7 @@ namespace CardGames.ConsoleVersion
             do
             {
                 Console.WriteLine();
-                Console.Write("[T]ry again or back to main [M]enu: ");
+                Console.Write("[T]ry again or back to [M]enu: ");
                 var key = Console.ReadKey(true);
 
                 switch (key.Key)

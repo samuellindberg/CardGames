@@ -26,6 +26,7 @@ namespace CardGames.Core
         public int TurnCounter { get; set; }
         public List<PlayingCard> Table { get; set; }
         public Player RoundWinner { get; set; }
+        public Player GameWinner { get; set; }
 
         public void GetPlayer(string name)
         {
@@ -55,7 +56,13 @@ namespace CardGames.Core
                 player.CardsOnHand.RemoveAt(cardIndex);
             }
 
-            //Check if everyone has played
+            CheckIfEveryonePlayedAndTrickWinner();
+
+            
+        }
+
+        private void CheckIfEveryonePlayedAndTrickWinner()
+        {
             if (Table.Count == Players.Length)
             {
                 RoundWinner = Table[0].PlayedBy;
@@ -80,6 +87,20 @@ namespace CardGames.Core
             }
             else
                 TurnCounter++;
+        }
+
+        public bool CheckIfGameIsOverAndAddScore()
+        {
+            bool gameOver = false;
+
+            if (Players.Where(p => p.CardsOnHand.Count > 0).Count() == 0)
+            {
+                GameWinner = RoundWinner;
+                GameWinner.ChicagoScore += 2;
+                gameOver = true;
+            }
+
+            return gameOver;
         }
 
         private bool CheckIfHavingSuit(Player player, List<PlayingCard> table)

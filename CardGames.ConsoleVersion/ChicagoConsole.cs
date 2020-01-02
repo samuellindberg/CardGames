@@ -43,6 +43,7 @@ namespace CardGames.ConsoleVersion
             Console.WriteLine("C H I C A G O");
             Console.WriteLine($"{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}");
             Console.WriteLine();
+            Console.WriteLine();
         }
         private void Menu()
         {
@@ -86,6 +87,8 @@ namespace CardGames.ConsoleVersion
 
         private void RunGame()
         {
+            bool gameOver = false;
+
             NumOfPlayers = GetNumberOfPlayers();
             GetPlayersNames(NumOfPlayers);
             core.InitChicago(NumOfPlayers);
@@ -96,7 +99,6 @@ namespace CardGames.ConsoleVersion
                 var currentPlayer = core.Players[core.TurnCounter % core.Players.Length];
                 Console.Clear();
                 Header();
-                Console.WriteLine();
                 PrintTable(core.Table);
                 Console.Write($"{currentPlayer.Name}'s turn. ");
                 if (core.Table.Count == 0)
@@ -105,11 +107,47 @@ namespace CardGames.ConsoleVersion
                 Console.WriteLine();
                 PrintCards(currentPlayer.CardsOnHand);
                 GetPlayerAction(currentPlayer);
+                gameOver = core.CheckIfGameIsOverAndAddScore();
 
-            } while (isRunning);
+            } while (gameOver);
+
+            Console.Clear();
+            Header();
+            PrintOutWinner();
+            TryAgainOrMenu();
+        }
+        private bool TryAgainOrMenu()
+        {
+            bool correctInput = false;
+            do
+            {
+                Console.WriteLine();
+                Console.Write("[T]ry again or back to [M]enu: ");
+                var key = Console.ReadKey(true);
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.T:
+                        return true;
+                    case ConsoleKey.M:
+                        core.Service.UpdateHighscore(core.Players);
+                        return false;
+                    default:
+                        Console.WriteLine("Please enter [T] or [M].");
+                        break;
+                }
+
+            } while (!correctInput);
+
+            return false;
         }
 
-
+        private void PrintOutWinner()
+        {
+            var w = core.GameWinner;
+            Console.WriteLine($"The winner is {w.Name}. New score: {w.ChicagoScore} (+{2})");
+            Console.WriteLine();
+        }
 
         private void GetPlayerAction(Player player)
         {
