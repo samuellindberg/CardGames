@@ -39,6 +39,8 @@ namespace CardGames.Core
             ShuffledDeck = DeckUtils.ShuffleDeck(deck.Cards);
             DeckUtils.DealCards(Players, ShuffledDeck, 5);
             Table = new List<PlayingCard>();
+            TurnCounter = 0;
+
         }
 
         public void PlayCard(Player player, int cardIndex)

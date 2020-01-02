@@ -90,15 +90,7 @@ namespace CardGames.ConsoleVersion
 
                 Console.Clear();
                 Header();
-                if (core.Players != null)
-                {
-                    Console.WriteLine("Same players as last round?");
-                    Console.WriteLine($"");
-                }
-                NumOfPlayers = GetNumberOfPlayers();
-                GetPlayersNames(NumOfPlayers);
-                core.InitChicago();
-                core.TurnCounter = 0;
+                CheckWhichPlayers();
 
                 do
                 {
@@ -124,6 +116,56 @@ namespace CardGames.ConsoleVersion
             } while (TryAgainOrMenu());
 
         }
+
+        private void CheckWhichPlayers()
+        {
+            if (core.Players == null)
+            {
+                GetNewPlayersAndInitGame();
+            }
+            else
+            {
+                Console.WriteLine("Same players as last round? [Y]es or [N]o.");
+
+                foreach (var p in core.Players)
+                {
+                    Console.WriteLine($"- {p.Name}");
+                }
+
+                Console.WriteLine();
+                bool correctInput = false;
+                do
+                {
+
+                    Console.Write("> ");
+                    var key = Console.ReadKey(true);
+
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.Y:
+                            core.InitChicago();
+                            correctInput = true;
+                            break;
+                        case ConsoleKey.N:
+                            core.Service.UpdateHighscore(core.Players);
+                            GetNewPlayersAndInitGame();
+                            correctInput = true;
+                            break;
+                        default:
+                            Console.WriteLine("Please enter [Y] or [N]. ");
+                            break;
+                    }
+                } while (!correctInput);
+            }
+        }
+
+        private void GetNewPlayersAndInitGame()
+        {
+            NumOfPlayers = GetNumberOfPlayers();
+            GetPlayersNames(NumOfPlayers);
+            core.InitChicago();
+        }
+
         private bool TryAgainOrMenu()
         {
             bool correctInput = false;

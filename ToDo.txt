@@ -1,3 +1,2 @@
 ToDo
-- Ace is printed "1" instead of "A"
-- Ace is not highest
+- Ace is not highest when not played first
