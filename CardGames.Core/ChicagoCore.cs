@@ -74,7 +74,7 @@ namespace CardGames.Core
                 {
                     if (Table[0].Suit == Table[i].Suit && highest != 1)
                     {
-                        if (highest < (int)Table[i].Rank)
+                        if (highest < (int)Table[i].Rank || (int)Table[i].Rank == 1)
                         {
                             highest = (int)Table[i].Rank;
                             RoundWinner = Table[i].PlayedBy;
