@@ -43,7 +43,6 @@ namespace CardGames.ConsoleVersion
             Console.WriteLine("C H I C A G O");
             Console.WriteLine($"{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[0]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}{DeckUtils.suitSymbols[1]}");
             Console.WriteLine();
-            Console.WriteLine();
         }
         private void Menu()
         {
@@ -58,8 +57,6 @@ namespace CardGames.ConsoleVersion
             switch (key.Key)
             {
                 case ConsoleKey.N:
-                    Console.Clear();
-
                     RunGame();
                     break;
                 case ConsoleKey.R:
@@ -87,34 +84,45 @@ namespace CardGames.ConsoleVersion
 
         private void RunGame()
         {
-            bool gameOver = false;
-
-            NumOfPlayers = GetNumberOfPlayers();
-            GetPlayersNames(NumOfPlayers);
-            core.InitChicago(NumOfPlayers);
-            core.TurnCounter = 0;
-
             do
             {
-                var currentPlayer = core.Players[core.TurnCounter % core.Players.Length];
+                bool gameOver = false;
+
                 Console.Clear();
                 Header();
-                PrintTable(core.Table);
-                Console.Write($"{currentPlayer.Name}'s turn. ");
-                if (core.Table.Count == 0)
-                    Console.Write("Plays first card.");
-                Console.WriteLine();
-                Console.WriteLine();
-                PrintCards(currentPlayer.CardsOnHand);
-                GetPlayerAction(currentPlayer);
-                gameOver = core.CheckIfGameIsOverAndAddScore();
+                if (core.Players != null)
+                {
+                    Console.WriteLine("Same players as last round?");
+                    Console.WriteLine($"");
+                }
+                NumOfPlayers = GetNumberOfPlayers();
+                GetPlayersNames(NumOfPlayers);
+                core.InitChicago();
+                core.TurnCounter = 0;
 
-            } while (gameOver);
+                do
+                {
+                    var currentPlayer = core.Players[core.TurnCounter % core.Players.Length];
+                    Console.Clear();
+                    Header();
+                    PrintTable(core.Table);
+                    Console.Write($"{currentPlayer.Name}'s turn. ");
+                    if (core.Table.Count == 0)
+                        Console.Write("Plays first card.");
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    PrintCards(currentPlayer.CardsOnHand);
+                    GetPlayerAction(currentPlayer);
+                    gameOver = core.CheckIfGameIsOverAndAddScore();
 
-            Console.Clear();
-            Header();
-            PrintOutWinner();
-            TryAgainOrMenu();
+                } while (!gameOver);
+
+                Console.Clear();
+                Header();
+                PrintOutWinner();
+
+            } while (TryAgainOrMenu());
+
         }
         private bool TryAgainOrMenu()
         {
@@ -188,8 +196,7 @@ namespace CardGames.ConsoleVersion
 
             do
             {
-                Console.WriteLine();
-                Console.Write("Enter hor many players (2-6): ");
+                Console.Write("Enter how many players (2-6): ");
                 try
                 {
                     input = Console.ReadLine().IsInt(2, 6);

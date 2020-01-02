@@ -33,7 +33,7 @@ namespace CardGames.Core
             //Player = Service.GetPlayerByName(name);
         }
 
-        public void InitChicago(int numOfPlayers)
+        public void InitChicago()
         {
             var deck = new PlayingCardDeck();
             ShuffledDeck = DeckUtils.ShuffleDeck(deck.Cards);
