@@ -63,7 +63,7 @@ namespace CardGames.Core
 
                 for (int i = 1; i < Table.Count; i++)
                 {
-                    if (Table[0].Suit == Table[i].Suit)
+                    if (Table[0].Suit == Table[i].Suit && highest != 1)
                     {
                         if (highest < (int)Table[i].Rank)
                         {
