@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SamUtils;
 using CardGames.Core.Models;
+using CardGames.Core.Enums;
 
 namespace CardGames.ConsoleVersion
 {
@@ -300,10 +301,25 @@ namespace CardGames.ConsoleVersion
             Console.WriteLine();
         }
 
-        private void PrintOutHighScore()
+        public void PrintOutHighScore()
         {
-            throw new NotImplementedException();
+            var highScoreList = core.Service.GetHighScores(CardGamesEnum.Chicago);
+            Console.Clear();
+            Header();
+            Console.WriteLine("-------------------");
+            Console.WriteLine("H I G H   S C O R E");
+            Console.WriteLine("-------------------");
+
+            foreach (var h in highScoreList)
+            {
+                Console.WriteLine($"{h.Name} - {h.ChicagoScore}");
+            }
+
+            Console.WriteLine();
+            Console.Write("Press any key to go back.");
+            Console.ReadKey(true);
         }
+
 
         private void GetPlayerName()
         {
@@ -314,7 +330,7 @@ namespace CardGames.ConsoleVersion
         {
             Console.Clear();
             Header();
-            Console.WriteLine("Guess if hidden card is higher or lower than the open card. Right answer gives +1 point, wrong answer gives -1 point.");
+            Console.WriteLine("All players gets five cards. The winner of the last trick gets +2 points.");
             Console.WriteLine();
             Console.Write("Press any key to go back.");
             Console.ReadKey(true);

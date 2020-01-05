@@ -1,2 +1,2 @@
 ToDo HighOrLow
-- Hjärter Ess (öppet kort) inte högre än Klöver 6 (gömt kort)
+- Lägg till Rules och Highscore i Chicago

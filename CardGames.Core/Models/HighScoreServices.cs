@@ -1,4 +1,5 @@
 ﻿using CardGames.Core.Cards;
+using CardGames.Core.Enums;
 using CardGames.Core.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,13 @@ namespace CardGames.Core.Models
                 .Any(h => h.Name == input);
         }
 
-        public List<HighScore> GetHighScores()
+        public List<HighScore> GetHighScores(CardGamesEnum game)
         {
-            return ctx.HighScore.Select(h => h).OrderByDescending(h => h.HighOrLowScore).ToList();
+            return ctx.HighScore
+                .Select(h => h)
+                .OrderByDescending(h => game == CardGamesEnum.HighOrLow ? h.HighOrLowScore : 
+                                        game == CardGamesEnum.Chicago ? h.ChicagoScore : h.Id)
+                .ToList();
         }
 
         public Player GetPlayerByName(string name)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using CardGames.Core.Cards;
 using CardGames.Core.Models;
+using CardGames.Core.Enums;
 
 namespace CardGames.ConsoleVersion
 {
@@ -23,8 +24,6 @@ namespace CardGames.ConsoleVersion
 
         public void Run()
         {
-            
-
             do
             {
                 Console.Clear();
@@ -99,7 +98,6 @@ namespace CardGames.ConsoleVersion
             Console.WriteLine($"{core.Player.Name}'s score: {(core.Player.HighOrLowScore == null ? 0 : core.Player.HighOrLowScore)}");
             Console.WriteLine();
         }
-
         private static void Header()
         {
             Console.WriteLine($"{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}");
@@ -132,7 +130,6 @@ namespace CardGames.ConsoleVersion
 
             return false;
         }
-
         private void PrintResult()
         {
             Console.Clear();
@@ -147,7 +144,6 @@ namespace CardGames.ConsoleVersion
             PrintCards(core.OpenCard, core.PlayersCard, false);
 
         }
-
         private void GetPlayerGuess()
         {
             bool correctInput = false;
@@ -205,7 +201,7 @@ namespace CardGames.ConsoleVersion
 
         public void PrintOutHighScore()
         {
-            var highScoreList = core.Service.GetHighScores();
+            var highScoreList = core.Service.GetHighScores(CardGamesEnum.HighOrLow);
             Console.Clear();
             Header();
             Console.WriteLine("-------------------");

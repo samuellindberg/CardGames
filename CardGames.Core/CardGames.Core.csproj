@@ -142,6 +142,7 @@
     <Compile Include="Cards\PlayingCard.cs" />
     <Compile Include="Cards\PlayingCardDeck.cs" />
     <Compile Include="ChicagoCore.cs" />
+    <Compile Include="Enums\CardGamesEnum.cs" />
     <Compile Include="HighOrLowCore.cs" />
     <Compile Include="Enums\CardSuit.cs" />
     <Compile Include="Enums\CardRank.cs" />
