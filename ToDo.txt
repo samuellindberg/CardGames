@@ -1,3 +1,2 @@
 ToDo HighOrLow
 - Hjärter Ess (öppet kort) inte högre än Klöver 6 (gömt kort)
-- Null check på High or low high score
