@@ -1,2 +1,2 @@
 ToDo HighOrLow
-- Lägg till Rules och Highscore i Chicago
+- Varför blir ID fucked up i databasen?

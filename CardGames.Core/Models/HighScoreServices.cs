@@ -26,7 +26,7 @@ namespace CardGames.Core.Models
         public List<HighScore> GetHighScores(CardGamesEnum game)
         {
             return ctx.HighScore
-                .Select(h => h)
+                //.Select(h => h
                 .OrderByDescending(h => game == CardGamesEnum.HighOrLow ? h.HighOrLowScore : 
                                         game == CardGamesEnum.Chicago ? h.ChicagoScore : h.Id)
                 .ToList();
@@ -40,6 +40,7 @@ namespace CardGames.Core.Models
                 Id = hs.Id,
                 Name = hs.Name,
                 HighOrLowScore = hs.HighOrLowScore,
+                ChicagoScore = hs.ChicagoScore,
                 CardsOnHand = new List<PlayingCard>(),
                 Tricks = new List<List<PlayingCard>>(),
             };

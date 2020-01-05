@@ -210,7 +210,8 @@ namespace CardGames.ConsoleVersion
 
             foreach (var h in highScoreList)
             {
-                Console.WriteLine($"{h.Name} - {h.HighOrLowScore}");
+                if (h.HighOrLowScore != null)
+                    Console.WriteLine($"{h.Name} - {h.HighOrLowScore}");
             }
 
             Console.WriteLine();

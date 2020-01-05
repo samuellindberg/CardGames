@@ -28,8 +28,10 @@ namespace CardGames.ConsoleVersion
                 isRegistered = core.Service.CheckIfRegistered(input);
                 if (isRegistered)
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Name is taken!");
                     Console.WriteLine($"Are you {input}? y/n ");
+                    Console.WriteLine();
                     do
                     {
                         var key = Console.ReadKey(true);
