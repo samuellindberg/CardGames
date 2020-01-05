@@ -22,7 +22,7 @@ namespace CardGames.Core
         public string Guess { get; set; }
         public bool tryAgain;
         public Player Player { get; set; }
-        
+
 
         public HighOrLowCore(HighScoreServices service)
         {
@@ -41,6 +41,26 @@ namespace CardGames.Core
                 if ((int)PlayersCard.Suit < (int)OpenCard.Suit)
                     high = true;
             }
+        }
+
+        public void GuessedHigh()
+        {
+            Result = high ? "RIGHT" : "WRONG";
+            Guess = "higher";
+            if (Player.HighOrLowScore == null)
+                Player.HighOrLowScore = high ? 1 : -1;
+            else
+                Player.HighOrLowScore += high ? 1 : -1;
+        }
+
+        public void GuessedLow()
+        {
+            Result = high ? "WRONG" : "RIGHT";
+            Guess = "lower";
+            if (Player.HighOrLowScore == null)
+                Player.HighOrLowScore = high ? -1 : 1;
+            else
+                Player.HighOrLowScore += high ? -1 : 1;
         }
 
         public void GetOpenCard()

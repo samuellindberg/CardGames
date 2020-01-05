@@ -10,8 +10,6 @@ namespace CardGames.Core
 {
     public class ChicagoCore : ICardGameCore
     {
-        bool cardOnTable = false;
-
         public ChicagoCore(HighScoreServices service)
         {
             Service = service;

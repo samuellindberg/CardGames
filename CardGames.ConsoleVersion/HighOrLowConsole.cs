@@ -48,6 +48,8 @@ namespace CardGames.ConsoleVersion
             {
                 case ConsoleKey.N:
                     Console.Clear();
+                    Header();
+                    Console.Write("Enter your name: ");
                     core.Player = utils.GetPlayerName();
                     RunGame();
                     break;
@@ -79,8 +81,7 @@ namespace CardGames.ConsoleVersion
             {
                 Console.Clear();
                 Header();
-                Console.WriteLine($"{core.Player.Name}'s score: {core.Player.HighOrLowScore}");
-                Console.WriteLine();
+                PrintNameAndScore();
                 core.GetOpenCard();
                 core.GetPlayersCard();
                 PrintCards(core.OpenCard, core.PlayersCard, true);
@@ -92,6 +93,13 @@ namespace CardGames.ConsoleVersion
 
             } while (core.tryAgain);
         }
+
+        private void PrintNameAndScore()
+        {
+            Console.WriteLine($"{core.Player.Name}'s score: {(core.Player.HighOrLowScore == null ? 0 : core.Player.HighOrLowScore)}");
+            Console.WriteLine();
+        }
+
         private static void Header()
         {
             Console.WriteLine($"{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[2]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}{DeckUtils.suitSymbols[3]}");
@@ -155,15 +163,11 @@ namespace CardGames.ConsoleVersion
                 switch (key.Key)
                 {
                     case ConsoleKey.H:
-                        core.Result = core.high ? "RIGHT" : "WRONG";
-                        core.Guess = "higher";
-                        core.Player.HighOrLowScore += core.high ? 1 : -1;
+                        core.GuessedHigh();
                         correctInput = true;
                         break;
                     case ConsoleKey.L:
-                        core.Result = core.high ? "WRONG" : "RIGHT";
-                        core.Guess = "lower";
-                        core.Player.HighOrLowScore += core.high ? -1 : 1;
+                        core.GuessedLow();
                         correctInput = true;
                         break;
                     default:
